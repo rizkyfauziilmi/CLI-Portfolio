@@ -77,7 +77,7 @@ export const TerminalInput = ({
         history.resetHistoryIndex(); // Reset history index when typing or deleting a character
     };
 
-    const isValidCommand = commandLists.indexOf(inputValue.toLowerCase()) !== -1;
+    const isValidCommand = commandLists.indexOf(inputValue.toLowerCase().trim()) !== -1;
 
     return (
         <div className="flex items-center">
