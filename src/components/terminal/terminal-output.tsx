@@ -29,9 +29,9 @@ export const TerminalOutput = ({
         <div>
             {output.isComponentFirst && output.component && output.component()}
             {output.text && (
-                <pre>
+                <p className={cn(output.isError && "text-red-700")}>
                     {output.text}
-                </pre>
+                </p>
             )}
             {output.component && !output.isComponentFirst && output.component()}
         </div>

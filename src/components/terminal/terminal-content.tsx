@@ -18,7 +18,7 @@ export const TerminalContent = () => {
     }
 
     return (
-        <div ref={contentRef} className="text-sm flex-1 overflow-auto font-mono">
+        <div ref={contentRef} className="text-sm break-words flex-1 overflow-auto font-mono">
             {output.outputs.map((output, index) => (
                 <TerminalOutput key={index} output={output} />
             ))}
