@@ -166,7 +166,7 @@ export const useTerminalStore = create<TerminalState>()((set, get) => ({
         },
       }));
 
-      const lowerCaseCommand = command.toLowerCase();
+      const lowerCaseCommand = command.toLowerCase().trim();
       const otherAction = get();
 
       // add the command to the output

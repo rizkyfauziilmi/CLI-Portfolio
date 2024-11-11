@@ -11,7 +11,7 @@ export const HistoryCommand = () => {
             {historiesMapping.map((historyValue, index) => {
                 const reversedIndex = history.histories.length - index - 1;
                 const isSelectedHistory = reversedIndex === history.historyIndex;
-                const isValidCommand = commandLists.indexOf(historyValue.toLowerCase()) !== -1;
+                const isValidCommand = commandLists.indexOf(historyValue.toLowerCase().trim()) !== -1;
 
                 return (
                     <div key={historyValue}
