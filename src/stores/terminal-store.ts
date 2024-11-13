@@ -26,7 +26,7 @@ type OutputType = {
   addOutput: (output: TerminalTypeOutput) => void;
   printError: (error: {
     invalidPart: string;
-    type: "COMMAND_NOT_FOUND" | "INVALID_ARGUMENT";
+    type: "COMMAND_NOT_FOUND" | "INVALID_ARGUMENT" | "EMPTY_COMMAND";
   }) => void;
   printHelp: () => void;
   printProfile: () => void;
@@ -35,12 +35,18 @@ type OutputType = {
 
 type ProcessorType = {
   isProcessingComplete: boolean;
-  processCommand: (command: string) => void;
+  processCommand: () => void;
 };
+
+type InputType = {
+    inputValue: string;
+    setInputValue: (value: string) => void;
+}
 
 interface TerminalState {
   history: HistoryType;
   output: OutputType;
+  input: InputType;
   processor: ProcessorType;
 }
 
@@ -68,6 +74,7 @@ export const useTerminalStore = create<TerminalState>()((set, get) => ({
       const errorMessages = {
         COMMAND_NOT_FOUND: `Command '${invalidPart}' not found. Type 'help' to see available commands.`,
         INVALID_ARGUMENT: `Invalid argument: ${invalidPart}`,
+        EMPTY_COMMAND: `Command is empty. Type 'help' to see available commands.`,
       };
       const errorMessage = errorMessages[type];
       get().output.addOutput({
@@ -96,6 +103,14 @@ export const useTerminalStore = create<TerminalState>()((set, get) => ({
         },
       }));
     },
+  },
+  input: {
+    inputValue: "",
+    setInputValue(value) {
+        set((state) => ({
+            input: { ...state.input, inputValue: value },
+        }));
+    }
   },
   history: {
     histories: [],
@@ -146,7 +161,7 @@ export const useTerminalStore = create<TerminalState>()((set, get) => ({
   },
   processor: {
     isProcessingComplete: true,
-    processCommand(command) {
+    processCommand() {
       set((state) => ({
         processor: {
           ...state.processor,
@@ -154,8 +169,9 @@ export const useTerminalStore = create<TerminalState>()((set, get) => ({
         },
       }));
 
-      const lowerCaseCommand = command.toLowerCase().trim();
       const otherAction = get();
+      const command = otherAction.input.inputValue;
+      const lowerCaseCommand = command.toLowerCase().trim();
 
       // add the command to the output
       otherAction.output.addOutput({
@@ -188,10 +204,16 @@ export const useTerminalStore = create<TerminalState>()((set, get) => ({
           break;
         default:
           {
-            const trimmedCommand = command.trim();
+            if (command.trim() === "") {
+              otherAction.output.printError({
+                invalidPart: "",
+                type: "EMPTY_COMMAND",
+              });
+              break;
+            }
 
             otherAction.output.printError({
-              invalidPart: trimmedCommand,
+              invalidPart: lowerCaseCommand,
               type: "COMMAND_NOT_FOUND",
             });
           }

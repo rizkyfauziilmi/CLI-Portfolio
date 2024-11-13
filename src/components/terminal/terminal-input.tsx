@@ -1,6 +1,6 @@
 import { commandLists, useTerminalStore } from "@/stores/terminal-store";
 import { Input } from "../ui/input";
-import { useState, useRef, useEffect, KeyboardEvent, ChangeEvent } from "react";
+import { useRef, useEffect, KeyboardEvent, ChangeEvent } from "react";
 import { cn } from "@/lib/utils";
 
 interface TerminalInputProps {
@@ -10,9 +10,8 @@ interface TerminalInputProps {
 export const TerminalInput = ({
     scrollToBottom
 }: TerminalInputProps) => {
-    const [inputValue, setInputValue] = useState("");
     const inputRef = useRef<HTMLInputElement>(null);
-    const { processor, output, history } = useTerminalStore();
+    const { processor, output, history, input } = useTerminalStore();
 
     // Focus the input when the component mounted
     useEffect(() => {
@@ -38,15 +37,15 @@ export const TerminalInput = ({
 
         // If user press Enter, process the command
         if (event.key === "Enter") {
-            processor.processCommand(inputValue);
-            setInputValue("");
+            processor.processCommand();
+            input.setInputValue("");
             history.resetHistoryIndex();
             inputRef.current?.focus();
         }
 
         // clear input when ctrl + c pressed
         if (event.key === "c" && event.ctrlKey) {
-            setInputValue("");
+            input.setInputValue("");
             history.resetHistoryIndex();
             output.addOutput({
                 text: "^C",
@@ -58,11 +57,11 @@ export const TerminalInput = ({
         // navigate through history when arrow up or down pressed
         if (event.key === "ArrowUp") {
             const upHistoryCommand = history.upHistory();
-            setInputValue(upHistoryCommand);
+            input.setInputValue(upHistoryCommand);
         }
         if (event.key === "ArrowDown") {
             const downHistoryCommand = history.downHistory();
-            setInputValue(downHistoryCommand);
+            input.setInputValue(downHistoryCommand);
         }
     };
 
@@ -73,11 +72,11 @@ export const TerminalInput = ({
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value);
+        input.setInputValue(e.target.value);
         history.resetHistoryIndex(); // Reset history index when typing or deleting a character
     };
 
-    const isValidCommand = commandLists.indexOf(inputValue.toLowerCase().trim()) !== -1;
+    const isValidCommand = commandLists.indexOf(input.inputValue.toLowerCase().trim()) !== -1;
 
     return (
         <div className="flex items-center">
@@ -91,9 +90,9 @@ export const TerminalInput = ({
                 ref={inputRef}
                 className={cn(
                     "w-full h-9 rounded-md bg-transparent px-3 py-1 shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:border-transparent border-none",
-                    inputValue.trim() === "" ? "text-pri" : isValidCommand ? "text-green-500" : "text-red-700"
+                    input.inputValue.trim() === "" ? "text-primary" : isValidCommand ? "text-green-500" : "text-red-700"
                 )}
-                value={inputValue}
+                value={input.inputValue}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
                 onBlur={handleBlur}
