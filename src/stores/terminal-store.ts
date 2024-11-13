@@ -1,5 +1,7 @@
 import { ProfileComponent } from "@/components/output/profile-component";
 import { create } from "zustand";
+import {HelpComponent} from "@/components/output/help-component.tsx";
+import { JSX } from "react";
 
 export type TerminalTypeOutput = {
   text?: string;
@@ -75,24 +77,10 @@ export const useTerminalStore = create<TerminalState>()((set, get) => ({
       });
     },
     printHelp() {
-      const actions: {
-        command: string;
-        description: string;
-      }[] = [
-        { command: "help", description: "Show all available commands" },
-        { command: "clear", description: "Clear the terminal screen" },
-        { command: "profile", description: "display personal information" },
-        { command: "↑↓", description: "Navigate through the command history" },
-        { command: "ctrl + c", description: "Terminate the current command" },
-      ];
-      const outputs = [
-        { text: "All Commands:", isCommand: false },
-        ...actions.map((action) => ({
-          text: `${action.command.padEnd(10)} - ${action.description}`,
-          isCommand: false,
-        })),
-      ];
-      outputs.forEach(get().output.addOutput);
+      get().output.addOutput({
+        component: HelpComponent,
+        isCommand: false,
+      })
     },
     printProfile() {
       get().output.addOutput({
@@ -179,7 +167,7 @@ export const useTerminalStore = create<TerminalState>()((set, get) => ({
       /**
        * add the command to the history
        * if command not empty string and
-       * current command is not in the first item of the history
+       * current command not in the first item of the history.
        * */
       if (
         command.trim() !== "" &&
