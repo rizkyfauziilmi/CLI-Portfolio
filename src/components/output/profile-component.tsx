@@ -34,7 +34,7 @@ const profileData: ProfileData = {
     currentStatus: "Studying at Widyatama University",
     age: new Date().getFullYear() - 2004,
     skills: ["TypeScript", "Go", "Git", "Docker", "Backend Development", "Frontend Development", "Cross-Platform Development"],
-    // experince years = last year of high school (born in 2004) - now year
+    // experience years = last year of high school (born in 2004) — now year.
     experience: `${new Date().getFullYear() - 2019} years of experience in web development`,
 }
 
@@ -110,7 +110,7 @@ In my free time, I enjoy ${profileData.hobby}.`
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col text-green-600 w-full max-w-2xl gap-6 p-4 rounded-lg"
+            className="flex flex-col w-full max-w-2xl gap-6 p-4 rounded-lg"
         >
             <div className="flex items-center gap-4">
                 <motion.div

@@ -27,13 +27,17 @@ export const TerminalOutput = ({
 
     return (
         <div>
-            {output.isComponentFirst && output.component && output.component()}
-            {output.text && (
-                <p className={cn(output.isError && "text-red-700")}>
-                    {output.text}
-                </p>
-            )}
-            {output.component && !output.isComponentFirst && output.component()}
-        </div>
-    )
-}
+            <div className="text-green-500">
+                {output.isComponentFirst && output.component && output.component()}
+            </div>
+                {output.text && (
+                    <p className={cn(output.isError && "text-red-700")}>
+                        {output.text}
+                    </p>
+                )}
+                <div className="text-green-500">
+                    {output.component && !output.isComponentFirst && output.component()}
+                </div>
+            </div>
+            )
+            }
