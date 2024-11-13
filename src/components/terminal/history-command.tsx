@@ -14,7 +14,7 @@ export const HistoryCommand = () => {
                 const isValidCommand = commandLists.indexOf(historyValue.toLowerCase().trim()) !== -1;
 
                 return (
-                    <div key={historyValue}
+                    <div key={index}
                         className={cn(
                             "px-2 py-1 rounded-sm",
                             isSelectedHistory && "bg-primary",

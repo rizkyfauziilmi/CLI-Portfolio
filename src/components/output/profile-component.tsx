@@ -34,7 +34,7 @@ const profileData: ProfileData = {
     currentStatus: "Studying at Widyatama University",
     age: new Date().getFullYear() - 2004,
     skills: ["TypeScript", "Go", "Git", "Docker", "Backend Development", "Frontend Development", "Cross-Platform Development"],
-    // experince years = last year of high school (born in 2004) - now year
+    // experience years = last year of high school (born in 2004) — now year.
     experience: `${new Date().getFullYear() - 2019} years of experience in web development`,
 }
 

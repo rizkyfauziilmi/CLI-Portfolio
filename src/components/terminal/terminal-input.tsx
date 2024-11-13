@@ -1,6 +1,6 @@
 import { commandLists, useTerminalStore } from "@/stores/terminal-store";
 import { Input } from "../ui/input";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, KeyboardEvent, ChangeEvent } from "react";
 import { cn } from "@/lib/utils";
 
 interface TerminalInputProps {
@@ -14,29 +14,29 @@ export const TerminalInput = ({
     const inputRef = useRef<HTMLInputElement>(null);
     const { processor, output, history } = useTerminalStore();
 
-    // Focus the input when the component is mounted
+    // Focus the input when the component mounted
     useEffect(() => {
         if (inputRef.current) {
             inputRef.current.focus();
         }
     }, []);
 
-    // Scroll to the bottom when the processing is complete
+    // Scroll to the bottom when the processing complete
     useEffect(() => {
         if (processor.isProcessingComplete) {
             scrollToBottom();
         }
     }, [processor.isProcessingComplete, scrollToBottom]);
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        // If the key is a printable character, focus the input
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+        // If the key printable character, focus the input
         if (event.key.length === 1) {
             if (inputRef.current) {
                 inputRef.current.focus();
             }
         }
 
-        // If the key is Enter, process the command
+        // If user press Enter, process the command
         if (event.key === "Enter") {
             processor.processCommand(inputValue);
             setInputValue("");
@@ -44,7 +44,7 @@ export const TerminalInput = ({
             inputRef.current?.focus();
         }
 
-        // clear input when ctrl + c is pressed
+        // clear input when ctrl + c pressed
         if (event.key === "c" && event.ctrlKey) {
             setInputValue("");
             history.resetHistoryIndex();
@@ -55,7 +55,7 @@ export const TerminalInput = ({
             })
         }
 
-        // If the key is ArrowUp or ArrowDown, navigate through history
+        // navigate through history when arrow up or down pressed
         if (event.key === "ArrowUp") {
             const upHistoryCommand = history.upHistory();
             setInputValue(upHistoryCommand);
@@ -72,7 +72,7 @@ export const TerminalInput = ({
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
         history.resetHistoryIndex(); // Reset history index when typing or deleting a character
     };

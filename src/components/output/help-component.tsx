@@ -54,7 +54,7 @@ export function HelpComponent() {
                 {command.description}
               </motion.div>
               {/*
-                This is the mobile version of the description. It will hide on desktop.
+                This mobile version of the description. It will hide on desktop.
               */}
               <motion.div
                   initial={{height: 0, opacity: 0}}
