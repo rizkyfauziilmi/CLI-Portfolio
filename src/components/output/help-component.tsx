@@ -28,7 +28,7 @@ export function HelpComponent() {
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.5}}
-          className="p-6 rounded-lg max-w-2xl"
+          className="rounded-lg max-w-2xl"
       >
         <h2 className="text-2xl font-bold">Available Commands:</h2>
         <p className="text-green-500/50 text-sm">
