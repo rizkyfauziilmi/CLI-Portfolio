@@ -27,7 +27,7 @@ export const TerminalOutput = ({
 
     return (
         <div>
-            <div className="text-green-500">
+            <div className="text-green-500 px-2 md:px-6">
                 {output.isComponentFirst && output.component && output.component()}
             </div>
                 {output.text && (
@@ -35,7 +35,7 @@ export const TerminalOutput = ({
                         {output.text}
                     </p>
                 )}
-                <div className="text-green-500">
+                <div className="text-green-500 px-2 md:px-6">
                     {output.component && !output.isComponentFirst && output.component()}
                 </div>
             </div>
