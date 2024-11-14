@@ -2,6 +2,7 @@ import { ProfileComponent } from "@/components/output/profile-component";
 import { create } from "zustand";
 import {HelpComponent} from "@/components/output/help-component.tsx";
 import { JSX } from "react";
+import {ProjectsComponent} from "@/components/output/projects-component.tsx";
 
 export type TerminalTypeOutput = {
   text?: string;
@@ -30,6 +31,7 @@ type OutputType = {
   }) => void;
   printHelp: () => void;
   printProfile: () => void;
+  printProjects: () => void;
   clearCommand: () => void;
 };
 
@@ -50,7 +52,7 @@ interface TerminalState {
   processor: ProcessorType;
 }
 
-export const commandLists = ["clear", "help", "profile"];
+export const commandLists = ["clear", "help", "profile", "projects"];
 
 export const useTerminalStore = create<TerminalState>()((set, get) => ({
   output: {
@@ -94,6 +96,12 @@ export const useTerminalStore = create<TerminalState>()((set, get) => ({
         component: ProfileComponent,
         isCommand: false,
       });
+    },
+    printProjects(){
+      get().output.addOutput({
+        component: ProjectsComponent,
+        isCommand: false,
+      })
     },
     clearCommand() {
       set((state) => ({
@@ -183,7 +191,7 @@ export const useTerminalStore = create<TerminalState>()((set, get) => ({
       /**
        * add the command to the history
        * if command not empty string and
-       * current command not in the first item of the history.
+       * current command not the first item of history.
        * */
       if (
         command.trim() !== "" &&
@@ -201,6 +209,9 @@ export const useTerminalStore = create<TerminalState>()((set, get) => ({
           break;
         case "profile":
           otherAction.output.printProfile();
+          break;
+        case "projects":
+          otherAction.output.printProjects();
           break;
         default:
           {

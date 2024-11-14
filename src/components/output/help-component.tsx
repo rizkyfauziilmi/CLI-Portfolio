@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import {Terminal, Trash2, User, ArrowUp, ArrowDown, XCircle, Lightbulb} from 'lucide-react'
+import {Terminal, Trash2, User, ArrowUp, ArrowDown, XCircle, Lightbulb, FolderGit2} from 'lucide-react'
 import {commandLists, useTerminalStore} from "@/stores/terminal-store.ts";
 import {cn} from "@/lib/utils.ts";
 
@@ -14,6 +14,7 @@ const commands: Command[] = [
   { name: 'help', description: 'Show all available commands', icon: <Terminal className="w-5 h-5" /> },
   { name: 'clear', description: 'Clear the terminal screen', icon: <Trash2 className="w-5 h-5" /> },
   { name: 'profile', description: 'Display personal information', icon: <User className="w-5 h-5" /> },
+  { name: 'projects', description: 'Display a list of my projects', icon: <FolderGit2 className="w-5 h-5" /> },
   { name: '↑↓', description: 'Navigate through the command history', icon: <><ArrowUp className="w-5 h-5" /><ArrowDown className="w-5 h-5" /></> },
   { name: 'ctrl + c', description: 'Terminate the current command', icon: <XCircle className="w-5 h-5" /> },
 ]
@@ -27,7 +28,7 @@ export function HelpComponent() {
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.5}}
-          className="p-6 rounded-lg shadow-lg max-w-2xl"
+          className="p-6 rounded-lg max-w-2xl"
       >
         <h2 className="text-2xl font-bold">Available Commands:</h2>
         <p className="text-green-500/50 text-sm">
