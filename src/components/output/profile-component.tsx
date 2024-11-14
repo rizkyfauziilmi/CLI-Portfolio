@@ -110,7 +110,7 @@ In my free time, I enjoy ${profileData.hobby}.`
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col w-full max-w-2xl gap-6 p-4 rounded-lg"
+            className="flex flex-col w-full max-w-2xl gap-6"
         >
             <div className="flex items-center gap-4">
                 <motion.div
