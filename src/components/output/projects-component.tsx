@@ -104,6 +104,8 @@ export function ProjectsComponent() {
             return '50%'
         case 'Planned':
             return '20%'
+        case "Discontinued":
+            return "100%"
         }
     }
 
